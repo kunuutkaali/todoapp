@@ -1,7 +1,8 @@
 # todoapp
 Express mongoose project
-# To create a server
-Create .env with PORT=<desired port number>
+# Setup server
+Create .env with PORT=desired port number
+# Start a server
 use command:
   <code>npm run devstart</code>
 to start server
