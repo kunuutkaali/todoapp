@@ -2,14 +2,16 @@
 const route = require('express').Router();
 
 route.get('/', (req, res)=>{
-    res.render('todo/index')
+    res.render('todos/index')
 })
 
 route.get('/new', (req, res)=>{
-    res.render('todo/new')
+    res.render('todos/new')
 })
 
 route.post('/new', (req, res)=>{
-    res.render('todo/new')
+    res.render('todos/new')
 })
+
+
 module.exports = route
