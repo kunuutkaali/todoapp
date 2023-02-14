@@ -4,7 +4,7 @@
   "description": "To do app, shows what to do next",
   "main": "index.js",
   "scripts": {
-    "devstart": "nodemon run app.js"
+    "start": "nodemon run app.js"
   },
   "keywords": [],
   "author": "",
