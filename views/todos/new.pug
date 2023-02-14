@@ -1,7 +1,7 @@
 extends ../layout
 block content
     h1 create New to do
-    form(action="/todos", method="POST", class="form form-register") 
+    form(action="/todos/new", method="POST", class="form form-register") 
         label(for="Titel") Titel
         input(type="text", id='Titel', name="Titel")
         label(for="Description") Description
