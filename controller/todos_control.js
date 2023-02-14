@@ -13,6 +13,15 @@ module.exports = {
             Starting_date: rawListeners.body.Starting_date,
             End_date: req.body.End_date
         })
+        
+        function todoCheck () {
+            if(Starting_date > End_date){
+                console.log('error')
+                return
+            }
+        }
+        todoCheck()
+
         console.log(todo);
         try{
             await todo.save();
