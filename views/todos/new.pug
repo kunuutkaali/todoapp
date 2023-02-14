@@ -2,4 +2,12 @@ extends ../layout
 block content
     h1 create New to do
     form(action="/", method="POST", class="form form-register") 
+        label(for="Titel") Titel
+        input(type="text", id='Titel', name="Titel")
+        label(for="Description") Description
+        input(type="text", id='Description', name="Description")
+        label(for="Starting_date") Starting date
+        input(type="date", id='Starting_date', name="Starting_date")
+        label(for="End_date") End date 
+        input(type="date", id='End_date', name="End_date")
         button(type=submit) Create
