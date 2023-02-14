@@ -13,5 +13,10 @@ route.post('/new', (req, res)=>{
     res.render('todos/new')
 })
 
+route.post('/todos', async function(req, res, next){
+    controller.postTodos(req, res, next);
+    res.send('create todo')
+})
+
 
 module.exports = route
