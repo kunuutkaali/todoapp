@@ -1,6 +1,7 @@
 // All todos gets, posts, Deletes goes here
 const route = require('express').Router();
 const Todo = require('../models/todos');
+const GetTodo = require('../models/gettodo')
 const db = require('../db');
 
 
@@ -67,6 +68,11 @@ route.post('/new', async (req,res) => {
     } catch (error) {
         console.error(error);
     }
+})
+
+route.get('/view', async (req, res) => {
+    let getTodo = await getTodo();
+    res.render('todoview', {todoDisplay: getTodo})
 })
 
 module.exports = route
