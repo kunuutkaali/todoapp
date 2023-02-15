@@ -28,8 +28,12 @@ route.get('/new', cookieJwtAuth, (req, res)=>{
 
 // Create new todo post req
 route.post('/new', cookieJwtAuth, async (req, res)=>{
+    // Validering
+
+    // Find user id from db
     try {
         const foundUser = await User.findOne({username: req.user.username})
+        // 
         const todo = new Todo({
             title: req.body.title,
             description: req.body.description,

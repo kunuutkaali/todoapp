@@ -4,9 +4,14 @@ const User = require('../models/user')
 const db = require('../db')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const cookieJwtAuth = require('../middleware/cookieJwtAuth')
 
-route.get('/', (req, res)=>{
-    res.render('users/login')
+route.get('/', cookieJwtAuth, (req, res)=>{
+    res.render('users/index')
+})
+route.get('/logout', (req, res)=>{
+    res.clearCookie("token");
+    res.redirect('/')
 })
 
 route.get('/register', (req, res)=>{

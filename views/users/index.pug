@@ -1,0 +1,10 @@
+extends ../layout
+block content
+    include ../includes/_usermenu
+    if(locals.errorMessage)
+        p=errorMessage
+    h1 User info
+    if(locals.user)
+        p user info goes here
+    else
+    p No user info provided
