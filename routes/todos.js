@@ -12,12 +12,12 @@ route.get('/new', (req, res)=>{
     res.render('todos/new')
 })
 
-route.post('/new', (req, res)=>{
-    res.render('todos/new')
-})
-
 route.post('/new', async (req, res) => {
-    try {
+    try{
+        if(Starting_date<End_date){
+            console.log('time error')
+            return
+        }
         const todo = new Todo({
             Titel: req.body.Titel,
             Description: req.body.Description,
@@ -34,8 +34,9 @@ route.post('/new', async (req, res) => {
             res.render('todos/new', {errorMessage: error, todo})
         }
     } catch (error) {
-        console.error(error);
+        res.render('todos/new', {errorMessage: error, todo})
     }
+
 })
 
 module.exports = route
