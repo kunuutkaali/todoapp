@@ -17,22 +17,25 @@ route.post('/new', (req, res)=>{
 })
 
 route.post('/new', async (req, res) => {
-    const todo = new Todo({
-        Titel: req.body.Titel,
-        Description: req.body.Description,
-        Starting_date: req.body.Starting_date,
-        End_date: req.body.End_date
-    })
     try {
-        await todo.save((err) =>{
-            console.error(err)
-            res.render('/todos/new', {errorMessage: err, todo})
+        const todo = new Todo({
+            Titel: req.body.Titel,
+            Description: req.body.Description,
+            Starting_date: req.body.Starting_date,
+            End_date: req.body.End_date
         })
-        res.redirect('/todos')
+        try {
+            await todo.save((err) =>{
+                console.error(err)
+                res.render('/todos/new', {errorMessage: err, todo})
+            })
+            res.redirect('/todos')
+        } catch (error) {
+            res.render('todos/new', {errorMessage: error, todo})
+        }
     } catch (error) {
-        res.render('todos/new', {errorMessage: error, todo})
+        console.error(error);
     }
-
 })
 
 module.exports = route
