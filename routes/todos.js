@@ -6,6 +6,7 @@ const db = require('../db')
 const cookieJwtAuth = require('../middleware/cookieJwtAuth')
 
 route.get('/', cookieJwtAuth, async(req, res)=>{
+    console.log(req.user.username);
     const foundUser = await User.findOne({username: req.user.username})
     if(foundUser){
         const todos = await Todo.find({user:foundUser.id})
@@ -21,7 +22,7 @@ route.get('/', cookieJwtAuth, async(req, res)=>{
 })
 
 // Create new todo form
-route.get('/new', (req, res)=>{
+route.get('/new', cookieJwtAuth, (req, res)=>{
     res.render('todos/new')
 })
 
