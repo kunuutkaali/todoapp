@@ -19,7 +19,7 @@ route.post('/new', async (req, res) => {
         Titel: req.body.Titel,
         Description: req.body.Description,
         Starting_date: req.body.Starting_date,
-        End_date: req.body.password
+        End_date: req.body.End_date
     })
     try {
         await todo.save((err) =>{
