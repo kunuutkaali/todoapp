@@ -1,10 +1,10 @@
 extends ../layout
 block content
-    div(class="login")
+    div(class="login-wrapper")
         if(locals.errorMessage)
             p=errorMessage
-        h1 Log in
-        form(action="/users/login", method="POST", class="form form-register") 
+        form(action="/users/login", method="POST", class="form form-user") 
+            h1 Log in
             div(class="form-group")
                 label(for="username") Username
                 if(locals.user)
@@ -18,4 +18,4 @@ block content
                 button(type=submit, class="btn") Login
             div(class="form-group")
                 p Not a user yet? 
-                    a(href="/users/register") Register here
+                    a(href="/users/register") Register here 

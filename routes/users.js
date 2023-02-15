@@ -25,7 +25,7 @@ route.post('/register', (req, res) => {
     })
     user.save((err) =>{
         if(err) {
-            res.render('/users/register', {
+            res.render('users/register', {
                 user: user,
                 errorMessage: "Error creating username, try another user"
             })

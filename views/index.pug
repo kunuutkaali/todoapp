@@ -1,9 +1,9 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  p 
-    a(href="/users/register") Create new user 
-  p 
-    a(href="/users/login") login
+  div.login-wrapper.frontpage
+    h1= title
+    h3 Manage what to do next
+    a(href="/users/login").cta LOG IN
+    p or
+    a(href="/users/register") Register

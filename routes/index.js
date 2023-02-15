@@ -3,7 +3,7 @@ const authorize = require('../middleware/authorize')
 
 
 router.get('/', authorize, (req, res) => {
-    res.render('index', { title:"Frontpage", user: "Exampel data" } ) 
+    res.render('index', { title:"Todoapp"} ) 
 })
  
 module.exports = router

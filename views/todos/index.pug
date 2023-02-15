@@ -1,9 +1,10 @@
 extends ../layout
 block content
-    include ../includes/_usermenu
-    h1 Users todos 
-    h2 List of all the user have created
+    div.wrapper
+        include ../includes/_usermenu
+        h1 Users todos 
+        h2 List of all the user have created
 
-    if(locals.todos)
-        each todo in todos 
-            p=todo.title
+        if(locals.todos)
+            each todo in todos 
+                p=todo.title

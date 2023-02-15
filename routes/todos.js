@@ -6,7 +6,6 @@ const db = require('../db')
 const cookieJwtAuth = require('../middleware/cookieJwtAuth')
 
 route.get('/', cookieJwtAuth, async(req, res)=>{
-    console.log(req.user.username);
     const foundUser = await User.findOne({username: req.user.username})
     if(foundUser){
         const todos = await Todo.find({user:foundUser.id})
