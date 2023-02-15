@@ -13,18 +13,18 @@ route.post('/new', (req, res)=>{
     res.render('todos/new')
 })
 
-route.post('/todos', (req, res) => {
-    const user = new User({
+route.post('/new', (req, res) => {
+    const todo = new Todo({
         Titel: req.body.Titel,
         Description: req.body.Description,
         Starting_date: req.body.Starting_date,
         End_date: req.body.password
     })
-    user.save((err) =>{
+    todo.save((err) =>{
         if(err) {
-            res.render('/todos', {
+            res.render('/todos/new', {
                 todo: todo,
-                errorMessage: "Error creating username, try another user"
+                errorMessage: "Error creating todo try again"
             })
         } else {
             res.redirect('/todos')
