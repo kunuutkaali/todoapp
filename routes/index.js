@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router()
 
-router.get('/', (req, res, next) => {
+
+router.get('/', (req, res) => {
     console.log('User went to frontpage');
-    res.render('index', { title:"Frontpage" } )
+    res.render('index', { title:"Frontpage" } ) 
 })
-
+ 
 module.exports = router

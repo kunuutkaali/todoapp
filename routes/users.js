@@ -3,9 +3,10 @@ const route = require('express').Router()
 const User = require('../models/user')
 const db = require('../db')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 route.get('/', (req, res)=>{
-    res.render('users/index')
+    res.render('users/login')
 })
 
 route.get('/register', (req, res)=>{
@@ -19,16 +20,15 @@ route.post('/register', (req, res) => {
     })
     user.save((err) =>{
         if(err) {
-            res.render('users/register', {
+            res.render('/users/register', {
                 user: user,
                 errorMessage: "Error creating username, try another user"
             })
         } else {
-            res.redirect('/')
+            res.redirect('/users/login')
         }
     })
 })
-
 route.get('/login', (req, res)=>{
     const user = new User()
     res.render('users/login', {user: user})
@@ -37,18 +37,36 @@ route.get('/login', (req, res)=>{
 // this handles when there is login post request
 route.post('/login', async (req, res)=>{
     // When users try to login
-    const user = new User({
+    let findUser = {
         username: req.body.username,
-        password: req.body.username
-    })
-    try {
-        const user = await user.findOne({username:username})
-        res.render('users/login', {user: user})
-    } catch(err) {
-        res.render('users/login', {user: user})
+        password: req.body.password
     }
-    res.send(user)
-    res.render('users/login', {user: user})
+    try {
+        const foundUser = await User.findOne({username:findUser.username})
+        if(foundUser !== null){
+            //Compare password:
+            const validPass = await bcrypt.compare(findUser.password, foundUser.password)
+            if(validPass){
+                // Code to run valid pass, Create acces token
+                const user = {
+                    username: req.body.username
+                }
+                const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1h" })
+                res.cookie("token", token, {
+                    httpOnly: true
+                })
+                res.redirect('/todos')
+            }else{
+                // Wrong password
+                res.render('users/login', {user:findUser, errorMessage:"Wrong password!"})
+            }
+        }else{
+            // User not found with that username
+            res.render('users/login', {user:findUser, errorMessage:"User not found!"})
+        }
+    } catch(err) {
+        res.render('users/login', {user: findUser, errorMessage: err})
+    }
 })
 
 
