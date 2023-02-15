@@ -1,5 +1,21 @@
 extends ../layout
 block content
+    if(locals.errorMessage)
+        p=errorMessage
     h1 create New to do
-    form(action="/", method="POST", class="form form-register") 
+    form(action="/todos/new", method="POST", class="form todo-form") 
+        label(for="title") Title
+        input(type="text", required, id="title", name="title")
+        label(for="description") Description
+        textarea(name="description", cols="30", rows="10", id="description")
+        label(for="startDate") Start date:
+        small *leave blank to start now
+        input(type="datetime-local", required, id="startDate", name="startDate")
+        label(for="deadline") Deadline: 
+        input(type="datetime-local", required, name="deadline", id="deadline")
+        label(for="done") Done
+        select(name="done", id="done") 
+            option(value="1") Done 
+            option(value="0" selected) Not done 
+        a(href="/todos") Cancel 
         button(type=submit) Create

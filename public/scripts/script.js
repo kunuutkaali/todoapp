@@ -1,1 +1,2 @@
-// Main public js
+// Main public
+// Server side validation
