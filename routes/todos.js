@@ -1,6 +1,8 @@
 // All todos gets, posts, Deletes goes here
 const route = require('express').Router();
+const User = require('../models/todos');
 const db = require('../db');
+const Todos = require('../models/todos');
 
 route.get('/', (req, res)=>{
     res.render('todos/index')
@@ -15,7 +17,7 @@ route.post('/new', (req, res)=>{
 })
 
 route.post('/new', async (req, res) => {
-    const todo = new Todo({
+    const todo = new Todos({
         Titel: req.body.Titel,
         Description: req.body.Description,
         Starting_date: req.body.Starting_date,
