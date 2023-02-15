@@ -71,7 +71,7 @@ route.post('/new', async (req,res) => {
 })
 
 route.get('/view', async (req, res) => {
-    let getTodo = await getTodo();
+    todo.find
     res.render('todoview', {todoDisplay: getTodo})
 })
 
