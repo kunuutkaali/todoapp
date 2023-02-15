@@ -1,8 +1,8 @@
 // All todos gets, posts, Deletes goes here
 const route = require('express').Router();
-const todo = require('../models/todos');
+const Todo = require('../models/todos');
 const db = require('../db');
-const Todos = require('../models/todos');
+
 
 route.get('/', (req, res)=>{
     res.render('todos/index')
