@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router()
+const authorize = require('../middleware/authorize')
 
-router.get('/', (req, res, next) => {
-    console.log('User went to frontpage');
-    res.render('index', { title:"Frontpage" } )
+
+router.get('/', authorize, (req, res) => {
+    res.render('index', { title:"Frontpage", user: "Exampel data" } ) 
 })
-
+ 
 module.exports = router

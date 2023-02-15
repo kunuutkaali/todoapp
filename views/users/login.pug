@@ -1,10 +1,21 @@
 extends ../layout
 block content
-    form(action="/", method="POST", class="form form-register") 
-        label(for="username") Username
-        input(type="text",name="username" id="username")
-        label(for="password") Password
-        input(type="password", name="password", id="password")
-        p Not a user yet?
-            a(href="/users/register") Register here
-        button(type=submit) Login
+    div(class="login")
+        if(locals.errorMessage)
+            p=errorMessage
+        h1 Log in
+        form(action="/users/login", method="POST", class="form form-register") 
+            div(class="form-group")
+                label(for="username") Username
+                if(locals.user)
+                    input(type="text",name="username", id="username", value=locals.user.username)
+                else 
+                    input(type="text",name="username", id="username")
+            div(class="form-group")
+                label(for="password") Password
+                input(type="password", name="password", id="password")
+            div(class="form-group")
+                button(type=submit, class="btn") Login
+            div(class="form-group")
+                p Not a user yet? 
+                    a(href="/users/register") Register here
