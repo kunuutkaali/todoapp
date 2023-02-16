@@ -6,6 +6,6 @@ block content
             p=errorMessage
         h1 User info
         if(locals.user)
-            p user info goes here
+            p username: #{locals.user.username}
         else
-        p No user info provided
+            p No user info provided

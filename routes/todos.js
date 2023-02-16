@@ -10,7 +10,11 @@ route.get('/', cookieJwtAuth, async(req, res)=>{
     if(foundUser){
         const todos = await Todo.find({user:foundUser.id})
         if(todos){
-            res.render('todos/index', {todos: todos})
+            // Make date readable
+            // for(let todo of todos){
+            //     todo.startDate = todo.startDate.toLocaleString();
+            // }
+            res.render('todos/index', {todos: todos, user:foundUser.username})
         }else{
             res.render('todos/index', {errorMessage: "No todos"})
         }
@@ -21,16 +25,17 @@ route.get('/', cookieJwtAuth, async(req, res)=>{
 })
 
 // Create new todo form
-route.get('/new', cookieJwtAuth, (req, res)=>{
-    res.render('todos/new')
+route.get('/new', cookieJwtAuth, async(req, res)=>{
+    const foundUser = await User.findOne({username: req.user.username})
+    res.render('todos/new', {user:foundUser.username})
 })
 
 // Create new todo post req
 route.post('/new', cookieJwtAuth, async (req, res)=>{
     // Validering
-    if(req.body.dateStart == undefined){
-        req.body.dateStart = new Date().toISOString();
-    }
+    // if(req.body.dateStart == undefined){
+    //     req.body.dateStart = new Date().toISOString();
+    // }
     // Find user id from db
     try {
         const foundUser = await User.findOne({username: req.user.username})
@@ -48,7 +53,7 @@ route.post('/new', cookieJwtAuth, async (req, res)=>{
                 res.redirect('/todos')
             })
         } catch (error) {
-            res.render('todos/new', {errorMessage: error, todo})
+            res.render('todos/new', {errorMessage: error, todo, user:req.user.username})
         }
     } catch (error) {
         console.error(error);

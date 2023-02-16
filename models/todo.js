@@ -8,7 +8,7 @@ const todoSchema = mongoose.Schema({
     description:{type : String},
     startDate: {
         type: Date,
-        required: true
+        default: Date.now
     },
     deadline: {
         type: Date,

@@ -56,6 +56,7 @@ header nav{
     display:flex;
     align-items: center;
     justify-content: space-between;
+    gap:5px;
 }
 header nav a{
     text-decoration: none;
@@ -95,8 +96,9 @@ header > nav > .col-left{
 }
 .form-todo textarea{
     padding:7px 10px;
-    height: 5rem;
-    overflow: scroll;
+    height: 7rem;
+    resize: vertical;
+    overflow: auto;
     border-radius: var(--padding-sm);
 }
 .form-todo option,

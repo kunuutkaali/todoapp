@@ -6,8 +6,9 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const cookieJwtAuth = require('../middleware/cookieJwtAuth')
 
-route.get('/', cookieJwtAuth, (req, res)=>{
-    res.render('users/index')
+route.get('/', cookieJwtAuth, async(req, res)=>{
+    const foundUser = await User.findOne({username: req.user.username})
+    res.render('users/index', {user:foundUser.username})
 })
 route.get('/logout', (req, res)=>{
     res.clearCookie("token");
