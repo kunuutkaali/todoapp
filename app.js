@@ -4,6 +4,7 @@ const path = require('path')
 const methodOverride = require(('method-override'))
 const cookieParser = require('cookie-parser')
 const app = express()
+const cookieJwtAuth = require('./middleware/cookieJwtAuth')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -28,10 +29,10 @@ app.use(cookieParser())
 
 // Setup routes
 app.use('/users', userRoute)
-app.use('/todos', todoRoute)
+app.use('/todos', cookieJwtAuth, todoRoute)
 
 // Index router / frontpage
-app.get('/', indexRouter)
+app.use('/', indexRouter)
 
 
 app.listen(process.env.PORT, () => {

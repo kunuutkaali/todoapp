@@ -3,40 +3,38 @@ const route = require('express').Router();// All user gets posts Deletes goes he
 const Todo = require('../models/todo')
 const User = require('../models/user')
 const db = require('../db')
-const cookieJwtAuth = require('../middleware/cookieJwtAuth')
 
-route.get('/', cookieJwtAuth, async(req, res)=>{
+route.get('/', async(req, res)=>{
     const foundUser = await User.findOne({username: req.user.username})
     if(foundUser){
-        const todos = await Todo.find({user:foundUser.id})
-        if(todos){
-            // Make date readable
-            // for(let todo of todos){
-            //     todo.startDate = todo.startDate.toLocaleString();
-            // }
-            res.render('todos/index', {todos: todos, user:foundUser.username})
-        }else{
+        let now = new Date()
+        const active = await Todo.find({user:foundUser.id, deadline: { $gt: now }, startDate: { $lt: now }}).sort({ deadline: -1 })
+        const future = await Todo.find({user:foundUser.id, deadline: { $gt: now }, startDate: { $gt: now }}).sort({ deadline: -1 })
+        const dead = await Todo.find({user:foundUser.id, deadline: { $lt: now }})
+        if(
+            active.length == 0 && 
+            dead.length == 0 &&
+            future.length == 0
+            ){
             res.render('todos/index', {errorMessage: "No todos"})
+        }else{
+            res.render('todos/index', {active: active, dead:dead, future:future, user:foundUser.username})
         }
     }else{
-        // Get all active todos:
-        res.render('todos/index', {errorMessage:"No active todos"})
+        // Finding user in db error
+        res.render('todos/index', {errorMessage:"No user found!"})
     }
 })
 
 // Create new todo form
-route.get('/new', cookieJwtAuth, async(req, res)=>{
+route.get('/new', async(req, res)=>{
     const foundUser = await User.findOne({username: req.user.username})
     res.render('todos/new', {user:foundUser.username})
 })
 
 // Create new todo post req
-route.post('/new', cookieJwtAuth, async (req, res)=>{
+route.post('/new', async (req, res)=>{
     // Validering
-    // if(req.body.dateStart == undefined){
-    //     req.body.dateStart = new Date().toISOString();
-    // }
-    // Find user id from db
     try {
         const foundUser = await User.findOne({username: req.user.username})
 
@@ -49,9 +47,12 @@ route.post('/new', cookieJwtAuth, async (req, res)=>{
             user: foundUser.id
         })
         try {
-            await todo.save((err) =>{
+            await todo.save()
+            if(todo){
                 res.redirect('/todos')
-            })
+            }else{
+                res.render('todos/new', {errorMessage: todo, todo, user:req.user.username})
+            }
         } catch (error) {
             res.render('todos/new', {errorMessage: error, todo, user:req.user.username})
         }

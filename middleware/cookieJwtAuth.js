@@ -7,8 +7,8 @@ const cookieJwtAuth = (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    res.clearCookie("token");
-    res.redirect("/users/login")
+    res.clearCookie("token")
+    res.redirect('/users/login')
   }
 }
 

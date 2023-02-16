@@ -8,7 +8,13 @@ const cookieJwtAuth = require('../middleware/cookieJwtAuth')
 
 route.get('/', cookieJwtAuth, async(req, res)=>{
     const foundUser = await User.findOne({username: req.user.username})
-    res.render('users/index', {user:foundUser.username})
+    if(!foundUser){
+        res.sendStatus(403)
+        res.redirect('/users/login')
+        next()
+    }else{
+        res.render('users/index', {user: req.user.username})
+    }
 })
 route.get('/logout', (req, res)=>{
     res.clearCookie("token");
@@ -36,8 +42,7 @@ route.post('/register', (req, res) => {
     })
 })
 route.get('/login', (req, res)=>{
-    const user = new User()
-    res.render('users/login', {user: user})
+    res.render('users/login')
 })
 
 // this handles when there is login post request
@@ -55,7 +60,7 @@ route.post('/login', async (req, res)=>{
             if(validPass){
                 // Code to run valid pass, Create acces token
                 const user = {
-                    username: req.body.username
+                    username: foundUser.username
                 }
                 const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1h" })
                 res.cookie("token", token, {

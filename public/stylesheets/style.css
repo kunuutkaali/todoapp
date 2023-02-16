@@ -57,6 +57,7 @@ header nav{
     align-items: center;
     justify-content: space-between;
     gap:5px;
+    flex-wrap: wrap;
 }
 header nav a{
     text-decoration: none;
@@ -168,4 +169,27 @@ button:hover{
 .frontpage h3{
     font-size: 3rem;
     margin-bottom:1rem;
+}
+
+/* To lists */
+.todo-active{
+    display:flex;
+    flex-direction: column;
+    gap:20px;
+}
+.todos-overview{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:20px;
+}
+.todo-small{
+    display:flex;
+    gap:10px;
+    background-color: var(--accent-2-color);
+    color: var(--dark-color);
+    padding:7px;
+    border-radius: var(--default-radius);
+}
+.todo-small > :first-child{
+    flex-grow: 1;
 }
