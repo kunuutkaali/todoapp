@@ -8,7 +8,6 @@ const todoSchema = mongoose.Schema({
     description:{type : String},
     startDate: {
         type: Date,
-        default: Date.now,
         required: true
     },
     deadline: {
@@ -31,5 +30,4 @@ const todoSchema = mongoose.Schema({
         ref: 'User'
     }
 })
-
 module.exports = mongoose.model('Todo', todoSchema)

@@ -52,17 +52,22 @@ body{
     color:var(--accent-2-color);
 }
 /* navigation */
-header nav ul{
+header nav{
     display:flex;
-    list-style: none;
+    align-items: center;
+    justify-content: space-between;
 }
-header nav ul li a{
+header nav a{
     text-decoration: none;
     padding: 12px;
     display:inline-block;
 }
-header nav ul li a:hover{
+header nav a:hover{
     text-decoration: underline;
+}
+header > nav > .col-left{
+    display: flex;
+    align-items: center;
 }
 /* Forms */
 .form-group{
@@ -83,7 +88,8 @@ header nav ul li a:hover{
 }
 .form input,
 .form option,
-.form select{
+.form select,
+.form textarea{
     font-family: var(--font-fam-2);
     font-size: 1.25rem;
 }

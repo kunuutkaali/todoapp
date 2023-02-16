@@ -3,7 +3,9 @@ block content
     div(class="login-wrapper")
         if(locals.errorMessage)
             p=errorMessage
+        
         form(action="/users/login", method="POST", class="form form-user") 
+            img(src="/img/logosmall.svg", alt="Todo app", style="width:100%; padding:0 30px;")
             h1 Log in
             div(class="form-group")
                 label(for="username") Username

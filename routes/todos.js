@@ -28,25 +28,25 @@ route.get('/new', cookieJwtAuth, (req, res)=>{
 // Create new todo post req
 route.post('/new', cookieJwtAuth, async (req, res)=>{
     // Validering
-
+    if(req.body.dateStart == undefined){
+        req.body.dateStart = new Date().toISOString();
+    }
     // Find user id from db
     try {
         const foundUser = await User.findOne({username: req.user.username})
-        // 
+
         const todo = new Todo({
             title: req.body.title,
             description: req.body.description,
-            startDate: req.body.startDate,
+            startDate: req.body.dateStart,
             deadline: req.body.deadline,
             done: req.body.done,
             user: foundUser.id
         })
         try {
             await todo.save((err) =>{
-                console.error(err)
-                res.render('/todos/new', {errorMessage: err, todo})
+                res.redirect('/todos')
             })
-            res.redirect('/todos')
         } catch (error) {
             res.render('todos/new', {errorMessage: error, todo})
         }

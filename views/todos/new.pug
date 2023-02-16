@@ -1,6 +1,7 @@
 extends ../layout
 block content
     div.wrapper
+        include ../includes/_usermenu
         if(locals.errorMessage)
             p=errorMessage
         form(action="/todos/new", method="POST", class="form form-todo")
@@ -11,7 +12,7 @@ block content
             textarea(name="description", cols="30", rows="10", id="description")
             label(for="startDate") Start date:
             small *leave blank to start now
-            input(type="datetime-local", required, id="startDate", name="startDate")
+            input(type="datetime-local", id="startDate", name="startDate")
             label(for="deadline") Deadline: 
             input(type="datetime-local", required, name="deadline", id="deadline")
             label(for="done") Done
