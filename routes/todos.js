@@ -1,7 +1,6 @@
 // All todos gets, posts, Deletes goes here
 const route = require('express').Router();
-const Todo = require('../models/todos');
-const GetTodo = require('../models/gettodo')
+const Todo = require('../model/todos');
 const db = require('../db');
 
 
@@ -43,10 +42,9 @@ route.get('/new', (req, res)=>{
 route.post('/new', async (req,res) => {
     var Start_date = req.body.Starting_date
     var date_end = req.body.End_date
-    try {
         if(Start_date>date_end){
             console.log('time error')
-            return
+            res.render('todos/new', {errorMessage: 'time error'})
         } else {
             const todo = new Todo({
                 Titel: req.body.Titel,
@@ -57,22 +55,18 @@ route.post('/new', async (req,res) => {
             try {
                 await todo.save((err) => {
                     console.error(err)
-                    res.render('/todos/new', {errorMessage: err, todo})
+                    res.render('todos/new', {errorMessage: err, todo})
                 })
                 res.redirect('/todos')
             } catch (error) {
                 res.render('todos/new', {errorMessage: error, todo})
             }
         }
-       
-    } catch (error) {
-        console.error(error);
-    }
 })
-
+/*
 route.get('/view', async (req, res) => {
     todo.find
     res.render('todoview', {todoDisplay: getTodo})
 })
-
+*/
 module.exports = route
