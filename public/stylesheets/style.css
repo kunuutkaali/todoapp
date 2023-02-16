@@ -28,7 +28,7 @@
     --padding-lg: 1.0em;
     
     /* rounded */
-    --default-radius: 7px;
+    --default-radius: 5px;
 }
 
 /* Fonts */
@@ -50,18 +50,70 @@ body{
     background:var(--main-color);
     box-shadow: inset 0px 0px 100px 63px rgba(0, 0, 0, 0.25);
     color:var(--accent-2-color);
-    height:100vh;
+}
+/* navigation */
+header nav{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    gap:5px;
+    flex-wrap: wrap;
+}
+header nav a{
+    text-decoration: none;
+    padding: 12px;
+    display:inline-block;
+}
+header nav a:hover{
+    text-decoration: underline;
+}
+header > nav > .col-left{
+    display: flex;
+    align-items: center;
 }
 /* Forms */
-.form-register{
-    display:flex;
-    flex-direction: column;
-    gap:10px;
-}
 .form-group{
     display:flex;
     flex-direction: column;
     gap:10px;
+    margin:7px 0;
+}
+
+.form-todo{
+    width:clamp(20rem, 50%, 25rem);
+    display:grid;
+    grid-template-columns:1fr;
+    grid-template-rows: 1fr;
+    gap:10px;
+    margin:0 auto;
+    font-family: var(--font-fam-2);
+}
+.form input,
+.form option,
+.form select,
+.form textarea{
+    font-family: var(--font-fam-2);
+    font-size: 1.25rem;
+}
+.form-todo textarea{
+    padding:7px 10px;
+    height: 7rem;
+    resize: vertical;
+    overflow: auto;
+    border-radius: var(--padding-sm);
+}
+.form-todo option,
+.form-todo select{
+    padding:7px 10px;
+}
+.form-user{
+    padding:10px;
+    width: clamp(20rem, 50%, 25rem);
+}
+.form-user h1{
+    text-align: center;
+    border-bottom: 1px solid silver;
+    padding:10px 0;
 }
 /* Inputs */
 form input{
@@ -72,7 +124,7 @@ form input{
 }
 /* Buttons */
 button{
-    padding: var(--padding-xs) var(--padding-lg);
+    padding: 15px 0;
     color: var(--accent-2-color);
     background-color: var(--main-color);
     border-color: var(--accent-2-color);
@@ -80,15 +132,65 @@ button{
     border-width: 1px;
     border-style: solid;
     cursor: pointer;
-    width:100%;
+    font-size: 1.25rem;
 }
 button:hover{
     color: var(--main-color);
     background-color: var(--accent-2-color);
 }
-
+/* Register and login forms*/
 /* containers */
-.login{
-    background:red;
-    max-width:500px;
+.login-wrapper{
+    min-height:100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.wrapper{
+    min-height:100vh;
+    padding:0 25px;
+}
+.cta{
+    border-radius: var(--default-radius);
+    padding:10px 15px;
+    background:var(--secondary-color);
+    color:var(--accent-2-color);
+    text-decoration: none;
+}
+.cta:hover{
+    background:var(--accent-2-color);
+    color:var(--secondary-color);
+}
+.frontpage h1{
+    font-size: 6rem;
+    text-transform: uppercase;
+}
+.frontpage h3{
+    font-size: 3rem;
+    margin-bottom:1rem;
+}
+
+/* To lists */
+.todo-active{
+    display:flex;
+    flex-direction: column;
+    gap:20px;
+}
+.todos-overview{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+    grid-column-gap: 6px;
+}
+.todo-small{
+    display:flex;
+    flex-wrap: wrap;
+    background-color: var(--accent-2-color);
+    color: var(--dark-color);
+    padding:7px;
+    border-radius: var(--default-radius);
+}
+.todo-small > :first-child{
+    background:limegreen;
+    flex-grow:1;
 }
