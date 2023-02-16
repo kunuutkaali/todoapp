@@ -179,17 +179,18 @@ button:hover{
 }
 .todos-overview{
     display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap:20px;
+    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+    grid-column-gap: 6px;
 }
 .todo-small{
     display:flex;
-    gap:10px;
+    flex-wrap: wrap;
     background-color: var(--accent-2-color);
     color: var(--dark-color);
     padding:7px;
     border-radius: var(--default-radius);
 }
 .todo-small > :first-child{
-    flex-grow: 1;
+    background:limegreen;
+    flex-grow:1;
 }
