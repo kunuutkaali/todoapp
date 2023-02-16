@@ -5,7 +5,7 @@ block content
         h1 Todos 
         .todos-overview
             if(locals.active)
-                .todo-active
+                .todo-active.todolist
                     h2 Active todos
                     each todo in active
                         .todo-small
@@ -20,12 +20,12 @@ block content
                                     =todo.deadline.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"})
                             if(!todo.done)
                                 p Status:
-                                    strong Not done
+                                    strong(style="color:red;") Not done
                             else 
                                 p Status:
                                     strong Done
             if(locals.dead)
-                .todo-active
+                .todo-dead.todolist
                     h2 Overdue todos
                     each todo in dead
                         .todo-small
@@ -40,12 +40,12 @@ block content
                                     =todo.deadline.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"})
                             if(!todo.done)
                                 p Status:
-                                    strong Not done
+                                    strong(style="color:red;") Not done
                             else 
                                 p Status:
                                     strong Done
             if(locals.future)
-                .todo-future
+                .todo-future.todolist
                     h2 Future todos
                     each todo in future
                         .todo-small
@@ -58,11 +58,10 @@ block content
                             p Deadline: 
                                 strong 
                                     =todo.deadline.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"})
+                            p=todo.description
                             if(!todo.done)
                                 p Status:
-                                    strong Not done
+                                    strong(style="color:red;") Not done
                             else 
                                 p Status:
                                     strong Done
-                            
-

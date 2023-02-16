@@ -41,7 +41,7 @@ route.post('/new', async (req, res)=>{
         const todo = new Todo({
             title: req.body.title,
             description: req.body.description,
-            startDate: req.body.dateStart,
+            startDate: req.body.startDate,
             deadline: req.body.deadline,
             done: req.body.done,
             user: foundUser.id
