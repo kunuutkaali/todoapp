@@ -18,6 +18,9 @@ block content
                             p Deadline: 
                                 strong 
                                     =todo.deadline.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"})
+                            form(action="/todos/todo", method="POST")
+                                input(type="hidden", name="id", value=todo.id)
+                                button(type="submit") Change status
                             if(!todo.done)
                                 p Status:
                                     strong(style="color:red;") Not done
