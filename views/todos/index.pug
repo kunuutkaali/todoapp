@@ -9,62 +9,106 @@ block content
                     h2 Active todos
                     each todo in active
                         .todo-small
-                            p Title:
+                            p 
                                 strong 
                                     =todo.title
-                            p Start: 
-                                strong 
-                                    =todo.startDate.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", year:"2-digit"})
-                            p Deadline: 
-                                strong 
-                                    =todo.deadline.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"})
+                            -let href = "/todos/"+todo.id+"/edit/"
+                            a(href=href) Edit
                             form(action="/todos/todo", method="POST")
                                 input(type="hidden", name="id", value=todo.id)
                                 button(type="submit") Change status
-                            if(!todo.done)
-                                p Status:
-                                    strong(style="color:red;") Not done
-                            else 
-                                p Status:
-                                    strong Done
-            if(locals.dead)
-                .todo-dead.todolist
-                    h2 Overdue todos
-                    each todo in dead
-                        .todo-small
-                            p Title:
-                                strong 
-                                    =todo.title
                             p Start: 
                                 strong 
                                     =todo.startDate.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", year:"2-digit"})
+                            p.description 
+                                =todo.description
+                            if(!todo.done) 
+                                p Status: 
+                                    strong(style="color:red;") Not done
+                            else 
+                                p Status: 
+                                    strong(style="color:limegreen;") Done
                             p Deadline: 
                                 strong 
                                     =todo.deadline.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"})
-                            if(!todo.done)
-                                p Status:
+            if(locals.overdue)
+                .todo-dead.todolist
+                    h2 Overdue todos
+                    each todo in overdue
+                        .todo-small
+                            p 
+                                strong 
+                                    =todo.title
+                            -let href = "/todos/"+todo.id+"/edit/"
+                            a(href=href) Edit
+                            form(action="/todos/todo", method="POST")
+                                input(type="hidden", name="id", value=todo.id)
+                                button(type="submit") Change status
+                            p Start: 
+                                strong 
+                                    =todo.startDate.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", year:"2-digit"})
+                            p.description 
+                                =todo.description
+                            if(!todo.done) 
+                                p Status: 
                                     strong(style="color:red;") Not done
                             else 
-                                p Status:
-                                    strong Done
+                                p Status: 
+                                    strong(style="color:limegreen;") Done
+                            p Deadline: 
+                                strong 
+                                    =todo.deadline.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"})
             if(locals.future)
                 .todo-future.todolist
                     h2 Future todos
                     each todo in future
                         .todo-small
-                            p Title:
+                            p 
                                 strong 
                                     =todo.title
+                            -let href = "/todos/"+todo.id+"/edit/"
+                            a(href=href) Edit
+                            form(action="/todos/todo", method="POST")
+                                input(type="hidden", name="id", value=todo.id)
+                                button(type="submit") Change status
                             p Start: 
                                 strong 
                                     =todo.startDate.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", year:"2-digit"})
+                            p.description 
+                                =todo.description
+                            if(!todo.done) 
+                                p Status: 
+                                    strong(style="color:red;") Not done
+                            else 
+                                p Status: 
+                                    strong(style="color:limegreen;") Done
                             p Deadline: 
                                 strong 
                                     =todo.deadline.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"})
-                            p=todo.description
-                            if(!todo.done)
-                                p Status:
+            if(locals.done)
+                .todo-future.todolist
+                    h2 Done
+                    each todo in done
+                        .todo-small
+                            p 
+                                strong 
+                                    =todo.title
+                            -let href = "todos/edit/:id" + todo.id
+                            a(href=href) Edit
+                            form(action="/todos/todo", method="POST")
+                                input(type="hidden", name="id", value=todo.id)
+                                button(type="submit") Change status
+                            p Start: 
+                                strong 
+                                    =todo.startDate.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", year:"2-digit"})
+                            p.description 
+                                =todo.description
+                            if(!todo.done) 
+                                p Status: 
                                     strong(style="color:red;") Not done
                             else 
-                                p Status:
-                                    strong Done
+                                p Status: 
+                                    strong(style="color:limegreen;") Done
+                            p Deadline: 
+                                strong 
+                                    =todo.deadline.toLocaleString("da-dk", {day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"})

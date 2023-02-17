@@ -1,7 +1,7 @@
 const express = require('express')
 require('dotenv').config()
 const path = require('path')
-const methodOverride = require(('method-override'))
+const methodOverride = require('method-override')
 const cookieParser = require('cookie-parser')
 const app = express()
 const cookieJwtAuth = require('./middleware/cookieJwtAuth')
@@ -18,6 +18,7 @@ const todoRoute = require('./routes/todos');
 // To pass data
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
+app.use(methodOverride('_method'))
 
 // Allow static files
 app.use(express.static(path.join(__dirname, "public")))

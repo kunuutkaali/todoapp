@@ -8,9 +8,10 @@ route.get('/', async(req, res)=>{
     const foundUser = await User.find({username: req.user.username})
     if(foundUser){
         let now = new Date()
-        const active = await Todo.find({user:foundUser, deadline: { $gt: now }, startDate: { $lt: now }})
-        const future = await Todo.find({user:foundUser, deadline: { $gt: now }, startDate: { $gt: now }})
-        const dead = await Todo.find({user:foundUser, deadline: { $lt: now }})
+        const active = await Todo.find({user:foundUser, deadline: { $gt: now }, startDate: { $lt: now }}).sort({ done: 1 }).sort({startDate: 1})
+        const future = await Todo.find({user:foundUser, deadline: { $gt: now }, startDate: { $gt: now }}).sort({ done: 1 }).sort({deadline: -1})
+        const overdue = await Todo.find({user:foundUser, deadline: { $lt: now }, done: false}).sort({ done: 1 }).sort({deadline: -1})
+        const done = await Todo.find({user:foundUser, deadline: { $lt: now }, done: true}).sort({ done: 1 }).sort({startDate: -1})
         if(
             active.length == 0 && 
             dead.length == 0 &&
@@ -18,7 +19,7 @@ route.get('/', async(req, res)=>{
             ){
             res.render('todos/index', {errorMessage: "No todos", user:req.user})
         }else{
-            res.render('todos/index', {active: active, dead:dead, future:future, user:req.user})
+            res.render('todos/index', {active: active, overdue:overdue, future:future, done:done, user:req.user})
         }
     }else{
         // Finding user in db error
@@ -31,11 +32,50 @@ route.get('/new', async(req, res)=>{
     res.render('todos/new', {user:req.user})
 })
 
+
+
+// Edit todo form
+route.get('/:id/edit', async(req, res)=>{
+    console.log(req.params.id);
+    try {
+        const todo = await Todo.findById(req.params.id)
+        res.render('todos/edit', {user:req.user, todo: todo})
+    } catch (error) {
+        res.redirect('/todos')
+    }
+})
+
+// Save edited todo
+route.put('/:id/', async(req, res)=>{
+    let todo
+    try {
+        todo = Todo.findById(req.params.id)
+        await todo.save()
+        res.redirect('/')
+    } catch (error) {
+        if(todo == null){
+            console.log(error);
+            res.redirect(`/todos/`)
+        } else{
+            console.log(error);
+            res.render('todos/edit', {
+                todo: todo,
+                errorMessage: "Erro updateing todo"
+            })
+        }
+    }
+})
+
 // Create new todo post req
 route.post('/new', async (req, res)=>{
     // Validering
-    try {
-        const foundUser = await User.findOne({username: req.user.username})
+    const foundUser = await User.findOne({username: req.user.username})
+    console.log(req.body);
+    if(req.body.startDate == ''){
+       console.log("startDate is null");
+       req.body.startDate = new Date()
+    }
+    if(foundUser){
         const todo = new Todo({
             title: req.body.title,
             description: req.body.description,
@@ -44,19 +84,18 @@ route.post('/new', async (req, res)=>{
             done: req.body.done,
             user: foundUser
         })
-        try {
-            await todo.save()
-            if(todo){
+        if(req.body.startDate > req.body.deadline){
+            res.render('todos/new', {errorMessage: "Start date shoulnt be later than deadline", todo, user:req.user})
+        }else{
+            const newTodo = await todo.save()
+            if(newTodo){
                 res.redirect('/todos')
             }else{
-                res.render('todos/new', {errorMessage: todo, todo, user:req.user.username})
+                res.render('todos/new', {errorMessage: newTodo, todo, user:req.user})
             }
-        } catch (error) {
-            res.render('todos/new', {errorMessage: error, todo, user:req.user.username})
         }
-    } catch (error) {
-
-        console.error(error);
+    }else{
+        res.redirect('/')
     }
 })
 // Update todo status to done
@@ -73,6 +112,4 @@ route.post('/todo', async (req, res)=>{
         }
     }
 })
-
-
 module.exports = route

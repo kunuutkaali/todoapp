@@ -181,12 +181,12 @@ form input{
 }
 .todos-overview{
     display:grid;
-    grid-template-columns: repeat( auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat( auto-fit, minmax(500px, 1fr));
     grid-column-gap: 10px;
 }
 .todo-small{
     display:grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-auto-flow: row;
     background-color: var(--accent-2-color);
     color: var(--dark-color);
@@ -195,4 +195,8 @@ form input{
 }
 .todo-small > :first-child{
     flex-grow:1;
+}
+p.description{
+    grid-column-start: 1;
+    grid-column-end: 3;
 }
