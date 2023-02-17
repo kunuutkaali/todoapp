@@ -1,7 +1,7 @@
 // All user gets posts Deletes goes here
 const route = require('express').Router()
 const User = require('../models/user')
-const db = require('../db')
+require('../db')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const cookieJwtAuth = require('../middleware/cookieJwtAuth')
@@ -13,7 +13,7 @@ route.get('/', cookieJwtAuth, async(req, res)=>{
         res.redirect('/users/login')
         next()
     }else{
-        res.render('users/index', {user: req.user.username})
+        res.render('users/index', {user: req.user})
     }
 })
 route.get('/logout', (req, res)=>{

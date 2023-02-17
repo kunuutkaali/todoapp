@@ -5,10 +5,10 @@ const todoSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    description:{type : String},
+    description:{ type : String},
     startDate: {
         type: Date,
-        default: Date.now
+        required: true
     },
     deadline: {
         type: Date,

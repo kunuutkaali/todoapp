@@ -12,12 +12,12 @@ block content
             textarea(name="description", cols="30", rows="10", id="description")
             label(for="startDate") Start date:
             small *leave blank to start now
-            input(type="datetime-local", id="startDate", name="startDate")
+            input(type="datetime-local", name="startDate", id="startDate")
             label(for="deadline") Deadline: 
             input(type="datetime-local", required, name="deadline", id="deadline")
             label(for="done") Done
             select(name="done", id="done") 
-                option(value="1") Done 
                 option(value="0" selected) Not done 
-            button(type=submit) Create
+                option(value="1") Done 
+            button(type="submit") Create
             a(href="/todos", style="text-align:center").cta Cancel
