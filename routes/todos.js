@@ -14,7 +14,7 @@ route.get('/', async(req, res)=>{
         const done = await Todo.find({user:foundUser, deadline: { $lt: now }, done: true}).sort({ done: 1 }).sort({startDate: -1})
         if(
             active.length == 0 && 
-            dead.length == 0 &&
+            overdue.length == 0 &&
             future.length == 0
             ){
             res.render('todos/index', {errorMessage: "No todos", user:req.user})
